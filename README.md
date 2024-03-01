@@ -1,70 +1,23 @@
-# Getting Started with Create React App
+# MongoDB - React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A very simple application demonstrating how to retrieve and playback audio from MongoDB.
 
-## Available Scripts
+A short conversation is taken from "Özel Ders" ("Private Lesson", Netflix, 2022) and stored in MP3 format in MongoDB GridFS.
+The conversation in original along with its English translation is shown to the user sentence by sentence.
+User can play the respective part of the audio as well.
 
-In the project directory, you can run:
+## Subtitles
+For now the conversation's text is stored in static format in `index.js`, since only one excerpt is scripted.
+Each sentence consists of a Turkish and an English version. Its respective `start` and `end` position in the underlying audio is also provided.
 
-### `npm start`
+## MP3 in MongoDB
+The audio track (1.3 MB, a bit over a minute) is uploaded to MongoDB GridFS by `mongofiles` (part of MongoDb database Command Line Tools, available in MongoDb's download center).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Vercel API
+A Vercel API `/api/mp3` retrieves the audio file from MongoDB and dispatches it as a raw byte stream.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## React Frontend
+Upon loading, a `useEffect()` and an `Axios` post call takes care of downloading the audio from MongoDB and storing it in a Blob object with a `URL.createObjectURL()` pointing to it.
+The URL gets fed into the source of a hidden static `<audio>` tag.
+When User pushes the megaphone button, the `<audio>` tag's `currentTime` is positioned to the actual sentence's `start` and the audio gets played.
+A `setInterval` takes care of pausing the playback after `start - end` millisecs.
