@@ -1,13 +1,16 @@
-# MongoDB - React App
+# Vercel - MongoDB - React App
 
-A very simple application demonstrating how to retrieve and playback audio from MongoDB.
+A quick demonstration of how to retrieve and play back audio from MongoDB.
 
 A short conversation is taken from "Özel Ders" ("Private Lesson", Netflix, 2022) and stored in MP3 format in MongoDB GridFS.
 The conversation in original along with its English translation is shown to the user sentence by sentence.
 User can play the respective part of the audio as well.
 
+## Vercel
+Deployed to Vercel: [https://mongo-vercel-demo-two.vercel.app/](https://mongo-vercel-demo-two.vercel.app/)
+
 ## Subtitles
-For now the conversation's text is stored in static format in `index.js`, since only one excerpt is scripted.
+For now the text is stored as a static variable in `index.js`, since only one excerpt is scripted.
 Each sentence consists of a Turkish and an English version. Its respective `start` and `end` position in the underlying audio is also provided.
 
 ## MP3 in MongoDB
