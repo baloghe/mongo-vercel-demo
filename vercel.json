@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/getquiz",
+            "destination": "/api/getquiz"
+        },
+        {
+            "source": "/mp3",
+            "destination": "/api/mp3"
+        }
+    ]
+}

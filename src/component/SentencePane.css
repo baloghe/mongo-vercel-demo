@@ -1,0 +1,27 @@
+.lang {
+  font-style: italic;
+  color: red;
+}
+
+.sentence {
+	color:  black;
+}
+
+div.sentencepane {
+	margin: 20px;
+}
+
+div.controller {
+	display: flex;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+div.arrow {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+img.hflip {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
